@@ -20,7 +20,7 @@ import signal
 
 DEBUG = False
 if DEBUG:
-    from slurmui.debug_strings import SINFO_DEBUG, SQUEUE_DEBUG
+    from slurman.debug_strings import SINFO_DEBUG, SQUEUE_DEBUG
 
 
 def run_in_thread(func):
@@ -43,7 +43,7 @@ def handle_error(func):
     return wrapper
 
 
-class SlurmUI(App):
+class Slurman(App):
     # configuration that can be set from the command line
     verbose = False
     cluster = None
@@ -78,8 +78,8 @@ class SlurmUI(App):
     border_type = "solid"
     border_color = "white"
 
-    CSS_PATH = "slurmui.tcss"
-    TITLE = f"SlurmUI (v{importlib.metadata.version('slurmui')})"
+    CSS_PATH = "slurman.tcss"
+    TITLE = f"Slurman (v{importlib.metadata.version('slurman')})"
 
     BINDINGS = [
         Binding("g", "display_nodes", "GPUs"),
@@ -492,7 +492,7 @@ class SlurmUI(App):
     @run_in_thread
     @handle_error
     def update_status(self):
-        self.title = f"SlurmUI (v{importlib.metadata.version('slurmui')})"
+        self.title = f"Slurman (v{importlib.metadata.version('slurman')})"
 
         njobs = self.stats.get("njobs", 0)
         njobs_running = self.stats.get("njobs_running", 0)
@@ -948,7 +948,7 @@ def run_ui(verbose=False, cluster=None, interval=10, history_range="1 week"):
     #     # global for quick debugging
     #     global DEBUG
     #     DEBUG = True
-    app = SlurmUI()
+    app = Slurman()
     app.verbose = verbose
     app.cluster = cluster
     app.interval = interval

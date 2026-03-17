@@ -1,7 +1,8 @@
 [project]
-name = "slurmui"
-version = "1.1.17"
-description = "Terminal UI for Slurm"
+name = "slurman"
+version = "1.2.0"
+description = "Terminal GUI for easier Slurm experience"
+readme = {file = "README.md", content-type = "text/markdown"}
 authors = [
     {name = "Shenhan Qian", email = "shenhan.qian@tum.de"}
 ]
@@ -18,8 +19,13 @@ dependencies = [
     "gpustat",
 ]
 [project.scripts]
-slurmui = "slurmui.slurmui_cli:slurmui_cli"
+slurman = "slurman.slurman_cli:slurman_cli"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[project.urls]
+Homepage = "https://github.com/ShenhanQian/slurman"
+Repository = "https://github.com/ShenhanQian/slurman"
+Issues = "https://github.com/ShenhanQian/slurman/issues"
