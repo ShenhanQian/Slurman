@@ -39,6 +39,10 @@ To debug, you could run `slurman -i 0 -v` to disable auto update and force verbo
 
 ![Verbose info panel](https://raw.githubusercontent.com/ShenhanQian/slurmui/main/asset/verbose_info.png)
 
+> [!NOTE]
+> Runtime errors are written into `~/.slurman_error.log`.
+
+
 ## Tested Clusters
 
 - [TUM CVG](https://cvg.cit.tum.de/)

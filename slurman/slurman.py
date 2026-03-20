@@ -11,6 +11,7 @@ import pandas as pd
 import re
 import os
 import threading
+import traceback
 from functools import wraps
 from datetime import datetime, timedelta
 import time
@@ -21,6 +22,10 @@ import signal
 DEBUG = False
 if DEBUG:
     from slurman.debug_strings import SINFO_DEBUG, SQUEUE_DEBUG
+
+
+ERROR_LOG_PATH = os.path.expanduser("~/.slurman_error.log")
+ERROR_LOG_LOCK = threading.Lock()
 
 
 def run_in_thread(func):
@@ -38,8 +43,15 @@ def handle_error(func):
         try:
             return func(self, *args, **kwargs)
         except Exception as e:
-            self.info_log.write(f"Error ({func.__name__}): {e}")
-            os.system(f"echo 'Error ({func.__name__}): {e}'")
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            error_message = f"[{timestamp}] Error ({func.__name__}): {e}"
+            self.info_log.write(error_message)
+
+            trace = traceback.format_exc()
+            with ERROR_LOG_LOCK:
+                with open(ERROR_LOG_PATH, "a", encoding="utf-8") as error_log:
+                    error_log.write(error_message + "\n")
+                    error_log.write(trace + "\n")
     return wrapper
 
 
